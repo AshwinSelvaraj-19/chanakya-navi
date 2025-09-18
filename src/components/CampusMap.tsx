@@ -58,7 +58,6 @@ interface RouteResult {
 const CampusMap: React.FC = () => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
-  const overlayRef = useRef<L.ImageOverlay | null>(null);
   const markersRef = useRef<Map<string, L.Marker>>(new Map());
   const routeLayerRef = useRef<L.Polyline | null>(null);
   const { toast } = useToast();
@@ -69,13 +68,6 @@ const CampusMap: React.FC = () => {
   const [endLocation, setEndLocation] = useState('');
   const [routeResult, setRouteResult] = useState<RouteResult | null>(null);
   const [filteredNodes, setFilteredNodes] = useState<Node[]>([]);
-  const [showCalibration, setShowCalibration] = useState(false);
-  const [overlayBounds, setOverlayBounds] = useState({
-    north: 12.9520,
-    south: 12.9450,
-    east: 77.6700,
-    west: 77.6660
-  });
 
   // Load graph data
   useEffect(() => {
@@ -83,7 +75,6 @@ const CampusMap: React.FC = () => {
       .then(response => response.json())
       .then((data: GraphData) => {
         setGraphData(data);
-        setOverlayBounds(data.metadata.overlayBounds);
         toast({
           title: "Campus Data Loaded",
           description: `Loaded ${data.nodes.length} locations and ${data.edges.length} pathways`
@@ -114,19 +105,6 @@ const CampusMap: React.FC = () => {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Add blueprint overlay
-    const imageUrl = '/assets/blueprint.jpg';
-    const imageBounds: L.LatLngBoundsExpression = [
-      [overlayBounds.south, overlayBounds.west],
-      [overlayBounds.north, overlayBounds.east]
-    ];
-
-    const overlay = L.imageOverlay(imageUrl, imageBounds, {
-      opacity: 0.7,
-      interactive: false
-    }).addTo(map);
-
-    overlayRef.current = overlay;
     mapInstanceRef.current = map;
 
     // Add markers for each node
@@ -140,7 +118,7 @@ const CampusMap: React.FC = () => {
     return () => {
       map.remove();
     };
-  }, [graphData, overlayBounds]);
+  }, [graphData]);
 
   // Search functionality
   useEffect(() => {
@@ -305,30 +283,8 @@ const CampusMap: React.FC = () => {
     setFilteredNodes([]);
   };
 
-  const updateOverlay = () => {
-    if (overlayRef.current && mapInstanceRef.current) {
-      mapInstanceRef.current.removeLayer(overlayRef.current);
-      
-      const imageBounds: L.LatLngBoundsExpression = [
-        [overlayBounds.south, overlayBounds.west],
-        [overlayBounds.north, overlayBounds.east]
-      ];
-
-      overlayRef.current = L.imageOverlay('/assets/blueprint.jpg', imageBounds, {
-        opacity: 0.7,
-        interactive: false
-      }).addTo(mapInstanceRef.current);
-
-      toast({
-        title: "Overlay Updated",
-        description: "Blueprint overlay position has been recalibrated"
-      });
-    }
-  };
-
   const handleImportData = (data: GraphData) => {
     setGraphData(data);
-    setOverlayBounds(data.metadata.overlayBounds);
     
     // Clear existing selections
     setStartLocation('');
@@ -476,84 +432,11 @@ const CampusMap: React.FC = () => {
 
           {/* Controls */}
           <div className="space-y-2">
-            <Button
-              variant="outline"
-              onClick={() => setShowCalibration(!showCalibration)}
-              className="w-full"
-            >
-              <Settings className="h-4 w-4 mr-2" />
-              Calibration
-            </Button>
-            
             <ExportImport 
               graphData={graphData}
               onImport={handleImportData}
             />
           </div>
-
-          {/* Calibration Panel */}
-          {showCalibration && (
-            <Card className="slide-in-right">
-              <CardHeader>
-                <CardTitle>Overlay Calibration</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="text-xs">North</label>
-                    <Input
-                      type="number"
-                      step="0.0001"
-                      value={overlayBounds.north}
-                      onChange={(e) => setOverlayBounds(prev => ({
-                        ...prev,
-                        north: parseFloat(e.target.value) || prev.north
-                      }))}
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs">East</label>
-                    <Input
-                      type="number"
-                      step="0.0001"
-                      value={overlayBounds.east}
-                      onChange={(e) => setOverlayBounds(prev => ({
-                        ...prev,
-                        east: parseFloat(e.target.value) || prev.east
-                      }))}
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs">South</label>
-                    <Input
-                      type="number"
-                      step="0.0001"
-                      value={overlayBounds.south}
-                      onChange={(e) => setOverlayBounds(prev => ({
-                        ...prev,
-                        south: parseFloat(e.target.value) || prev.south
-                      }))}
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs">West</label>
-                    <Input
-                      type="number"
-                      step="0.0001"
-                      value={overlayBounds.west}
-                      onChange={(e) => setOverlayBounds(prev => ({
-                        ...prev,
-                        west: parseFloat(e.target.value) || prev.west
-                      }))}
-                    />
-                  </div>
-                </div>
-                <Button onClick={updateOverlay} className="primary-button w-full">
-                  Update Overlay
-                </Button>
-              </CardContent>
-            </Card>
-          )}
         </div>
       </div>
 
