@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    {"id":"gate1","name":"Gate 1","lat":12.9510,"lng":77.6679},
+    {"id":"gate2","name":"Gate 2","lat":12.9505,"lng":77.6680},
+    {"id":"admin1","name":"Admin Block 1","lat":12.9500,"lng":77.6680},
+    {"id":"junction","name":"Junction","lat":12.9496,"lng":77.6682},
+    {"id":"admin2","name":"Admin Block 2","lat":12.9490,"lng":77.6685},
+    {"id":"parents","name":"Parents Stay Area","lat":12.9490,"lng":77.6692},
+    {"id":"foodcourt","name":"Food Court","lat":12.9480,"lng":77.6684},
+    {"id":"hostel1","name":"Hostel 1","lat":12.9476,"lng":77.6680},
+    {"id":"engblock","name":"Eng Block","lat":12.9470,"lng":77.6676},
+    {"id":"sports","name":"Sports Area","lat":12.9458,"lng":77.6675},
+    {"id":"faculty","name":"Faculty Quarters","lat":12.9492,"lng":77.6680}
+  ],
+  "edges": [
+    {"a":"gate1","b":"gate2","dist":180},
+    {"a":"gate2","b":"admin1","dist":75},
+    {"a":"gate2","b":"parents","dist":283},
+    {"a":"admin1","b":"admin2","dist":125},
+    {"a":"admin1","b":"parents","dist":250},
+    {"a":"admin2","b":"foodcourt","dist":215},
+    {"a":"admin2","b":"faculty","dist":170},
+    {"a":"foodcourt","b":"parents","dist":215},
+    {"a":"admin2","b":"parents","dist":305},
+    {"a":"foodcourt","b":"hostel1","dist":271},
+    {"a":"hostel1","b":"engblock","dist":438},
+    {"a":"hostel1","b":"sports","dist":565},
+    {"a":"parents","b":"foodcourt","dist":415},
+    {"a":"parents","b":"hostel1","dist":645}
+  ],
+  "metadata": {
+    "source":"user-provided distances",
+    "centerApprox":[12.9507,77.6682],
+    "overlayBounds": {
+      "north": 12.9520,
+      "south": 12.9450,
+      "east": 77.6700,
+      "west": 77.6660
+    }
+  }
+}
