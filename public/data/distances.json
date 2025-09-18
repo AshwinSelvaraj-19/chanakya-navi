@@ -1,16 +1,16 @@
 {
   "nodes": [
-    {"id":"gate1","name":"Gate 1","lat":12.9510,"lng":77.6679},
-    {"id":"gate2","name":"Gate 2","lat":12.9505,"lng":77.6680},
-    {"id":"admin1","name":"Admin Block 1","lat":12.9500,"lng":77.6680},
-    {"id":"junction","name":"Junction","lat":12.9496,"lng":77.6682},
-    {"id":"admin2","name":"Admin Block 2","lat":12.9490,"lng":77.6685},
-    {"id":"parents","name":"Parents Stay Area","lat":12.9490,"lng":77.6692},
-    {"id":"foodcourt","name":"Food Court","lat":12.9480,"lng":77.6684},
-    {"id":"hostel1","name":"Hostel 1","lat":12.9476,"lng":77.6680},
-    {"id":"engblock","name":"Eng Block","lat":12.9470,"lng":77.6676},
-    {"id":"sports","name":"Sports Area","lat":12.9458,"lng":77.6675},
-    {"id":"faculty","name":"Faculty Quarters","lat":12.9492,"lng":77.6680}
+    {"id":"gate1","name":"Gate 1","lat":13.2210,"lng":77.7079},
+    {"id":"gate2","name":"Gate 2","lat":13.2205,"lng":77.7080},
+    {"id":"admin1","name":"Admin Block 1","lat":13.2200,"lng":77.7080},
+    {"id":"junction","name":"Junction","lat":13.2196,"lng":77.7082},
+    {"id":"admin2","name":"Admin Block 2","lat":13.2190,"lng":77.7085},
+    {"id":"parents","name":"Parents Stay Area","lat":13.2190,"lng":77.7092},
+    {"id":"foodcourt","name":"Food Court","lat":13.2180,"lng":77.7084},
+    {"id":"hostel1","name":"Hostel 1","lat":13.2176,"lng":77.7080},
+    {"id":"engblock","name":"Eng Block","lat":13.2170,"lng":77.7076},
+    {"id":"sports","name":"Sports Area","lat":13.2158,"lng":77.7075},
+    {"id":"faculty","name":"Faculty Quarters","lat":13.2192,"lng":77.7080}
   ],
   "edges": [
     {"a":"gate1","b":"gate2","dist":180},
@@ -30,12 +30,6 @@
   ],
   "metadata": {
     "source":"user-provided distances",
-    "centerApprox":[12.9507,77.6682],
-    "overlayBounds": {
-      "north": 12.9520,
-      "south": 12.9450,
-      "east": 77.6700,
-      "west": 77.6660
-    }
+    "centerApprox":[13.2190,77.7082]
   }
 }
